@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Review of Calculus}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Computer Arithmetic}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{Binary Machine Numbers}{subsection.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.2}{Decimal Machine Numbers}{subsection.1.2}% 5
+\BOOKMARK [1][-]{section.2}{Solution of Equations in One Variable}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{Bisection Method}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.2}{Fixed-Point Iteration}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.3}{Newton's Method and its Extentions}{section.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Algorithm}{subsection.2.3}% 10
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Second Method}{subsection.2.3}% 11
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Method of False Position}{subsection.2.3}% 12
