@@ -43,7 +43,9 @@
     \item \textbf{Mean Value Theorem}: suppose $f \in C[a,b]$ and $f$ is differentiable on $(a,b)$, then there is a number $c \in (a,b)$ s.t.
       \[f'(c) = \frac{f(b) - f(a)}{b - a}\]
     \item \textbf{Extreme Value Theorem}: suppose $f \in C[a,b]$, $c_1, c_2 \in [a,b]$, and $f(c_1) \leq f(x) \leq c_2$ for all $x \in [a,b]$. If $f$ is differentiable on $(a,b)$ then $c_1, c_2$ either occur at the endpoints $[a,b]$ or where $f' = 0$
-    \item \textbf{Riemann Integral}: $\int_a^b f(x) \, dx = \lim_{\max{\Delta x_i}} \rightarrow 0 \sum_{i = 1}^n f(z_i) \Delta x_i$
+    \item \textbf{Generalized Rolle's Theorem}: let $f(x) \in C[a,b]$ is $n$ times differentiable on $(a,b)$ and $f(x) = 0$ at $n+1$ distinct numbers. Then exists $c \in (x_0, x_n)$ where $f^{(n)}(c) = 0$
+    \item \textbf{Intermediate Value Theomre}: let $f \in C[a,b]$ and $K$ be between $f(a)$ and $f(b0$ then there eixsts $c \in (a,b)$ such that $f(c) = K$
+    \item \textbf{Riemann Integral}: $\int_a^b f(x) \, dx = \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i = 1}^n f(x_i)$
     \item \textbf{Weighted Mean Value Theorem for Intergrals}: suppose $f, g$ exist on $[a,b]$ and $g(x)$ doesn't change sign on $[a,b]$. Then there exists a $c \in (a,b)$ with
       \[\int_a^b f(x) g(x) \, dx = f(c) \int_a^b g(x) \, dx\]
       \begin{itemize}
@@ -84,7 +86,7 @@
   \subsubsection{Decimal Machine Numbers}
   Numbers are represented as $k$-digit \textbf{decimal machine numbers}: $\pm 0. d_1d_2\ldots d_k \times 10^n$
   \begin{itemize}
-    \item floating point form is obtained by terminating the mantissa of the number at $k$ decimal digits. 2 ways of doing this
+    \item floating point form $fl(x)$ is obtained by terminating the mantissa of the number at $k$ decimal digits. 2 ways of doing this
       \begin{itemize}
         \item \textbf{Chopping}: chop off digits $d_{k+1}d_{k+2} \ldots$
         \item \textbf{Rounding}: round $d_k$ based on the value of $d_{k+1}$
@@ -95,8 +97,52 @@
   \item \textbf{Absolute Error}: $|p - p^*|$
   \item \textbf{Relative Error}: $\frac{|p - p^*|}{|p|}$ if $p \neq 0$
   \end{itemize}
-  $p^*$ is said to approximate $p$ to $t$ \textbf{significant digits} if $t$ is the largest nonnegative integer for which
-\[\frac{|p - p^*|}{|p|} \leq 5 \times 10^{-t}\]
+
+  \textbf{Finite Digit Arithmetic} is represented as
+
+  \[x + y = fl(fl(x) + fl(y))\]
+  \[x - y = fl(fl(x) - fl(y))\]
+  \[x \cdot y = fl(fl(x) \cdot fl(y))\]
+  \[x \div y = fl(fl(x) \div fl(y))\]
+
+  \subsection{Nested Arithemtic}
+  Accuracy loss due to roundoff can be reduced by rearranging calculations. For example, 
+
+  \[f(x) = x^3 - 6.1x^2 + 3.2x + 1.5\]
+
+  Can be represented as
+
+  \[f(x) = ((x-6.1)x + 3.2)x + 1.5\]
+
+  The latter representation uses less multiplication and isn't as affected by roundoff errors due to multiplications. 
+
+  \subsection{Algorithm + Convergence}
+  \textbf{Stable Algorithm}: small changes to input produce a small change to the output. Otherwise it is an \textbf{Unstable Algorithm}
+  \begin{itemize}
+    \item \textbf{Note}: some algorithms can be \textbf{Conditionally Stable}
+  \end{itemize}
+
+  Suppose that an error with magnitude of $E_0 > 0$ is introduced and after $n$ operations it becomes $E_n$
+  \begin{itemize}
+    \item $E_n \approx C_n E_0$ where is $C$ is a constant then there is a \textbf{linear} error growth
+    \item $E_n \approx C^n E_0$ then there is an \textbf{exponential} error growth
+  \end{itemize}
+  \subsubsection{Rate of Convergence}
+
+  \textbf{Definition 1}: let $\{\beta_n\} \rightarrow 0$ and $\{\alpha_n\} \rightarrow \alpha$. If there is a constant $k$ such that
+
+  \[|\alpha_n - a| \leq k | \beta_n|\]
+
+  then $\{\alpha_n\}$ converges to $\alpha$ with a \textbf{rate of convergence} of $O(\beta_n)$
+
+  Usually $\bega_n = \frac{1}{n^p}$ for $p > 0$
+
+  \textbf{Definition 2}: suppose $\lim_{h \rightarrow 0} G(h) = 0$ and $\lim_{h \rightarrow 0} F(h) = L$ and there is a $k$ such that
+
+  \[|F(h) - L| \leq k|G(h)|\]
+
+  Then $F(h) = L + O(G(h))$, where usually $G(h) = h^p$ for $p > 0$
+
 \section{Solution of Equations in One Variable}
 \subsection{Bisection Method}
 Suppose $f$ is a cont function defined on $[a,b]$ with $f(a)$ and $f(b)$ of opposite signs. By IVT, there is a $p \in (a,b)$ with $f(p) = 0$
@@ -123,6 +169,13 @@ while i $\leq N_0$:
 Output FAILURE;
 \end{lstlisting}
 
+There are various possibilities for TOL:
+\begin{itemize}
+  \item $|p_N - p_{N-1}| < \epsilon$
+  \item $\frac{|p_N - p_{N-1}|}{|p_N|} < \epsilon$
+  \item $|f(p_N)| < \epsilon$
+\end{itemize}
+
 Issues:
 \begin{itemize}
   \item there are some sequences where $p_n - p_{n-1} \rightarrow 0$ but the sequence diverges
@@ -138,7 +191,7 @@ Has a rate of convergence of $O(\frac{1}{2^n})$: $p_n = p + O(\frac{1}{2^n})$
 \subsection{Fixed-Point Iteration}
 \textbf{Fixed point}: a point $p$ such that $f(p) = p$. Fixed-point and root-finding are similar in that:
 \begin{itemize}
-  \item given a root problem $f(p) = 0$, we can define a $g$ with a fixed point at $p$: $g(x) = x - f(x)$ or $g(x) = x + f(x)$
+  \item given a root problem $f(p) = 0$, we can define a $g$ with a fixed point at $p$: $g(x) = x - f(x)$
     \begin{itemize}
       \item If $g$ has a fixed point at $p$, then $f(x) = x - g(x)$ has a zero at $p$
     \end{itemize}
@@ -165,18 +218,17 @@ Output FAILURE
 \end{lstlisting}
 \textbf{Theorem}: let $g \in C[a,b]$, $g(x) \in [a,b]$ for all $x$, $g'(x)$ defined on $(a,b)$ where $|g'(x)| \leq k < 1$. Then $p_n = g(p_{n-1})$ converges to $p$
 
-\textbf{Proof}: since $p_n \in [a,b]$ and $|g'(x)| \leq k < 1$, by MVT we have
-\[|p_n p| = |g(p_{n-1} - g(p)| = |g'(x_0)||p_{n-1} - p| \leq k|p_{n-1} - p|\]
+\textbf{Proof}: since $p_n \in [a,b]$ and $|g'(x)| \leq k < 1$, by MVT we have for $x^* \in [a,b]$
+\[|p_n - p| = |g(p_{n-1}) - g(p)| = |g'(x^*)||p_{n-1} - p| \leq k|p_{n-1} - p|\]
 This leads to
-\[|p_n - p| \leq k|p_{n-1} - p| \leq k^2|p_{n-2} - p| \leq \ldots \leq k^n|p_0 - p|\]
+\[|p_n - p| \leq k|p_{n-1} - p| \leq k^2|p_{n-2} - p| \leq \ldots \leq k^n|p_0 - p| \rightarrow 0\]
 
-Thus $\lim_{n \rightarrow \infty}|p_n - p| = 0$
 \subsection{Newton's Method and its Extentions}
 Let $f \in C^2[a,b]$, $p_0 \in [a,b]$, $f'(p_0) \neq 0$, and $|p- p_0|$ be small. Then we can use Taylor Polynomials:
 \[f(p) = f(p_0) + (p-p_0)f'(p_0) + \frac{(p-p_0)^2}{2}f''(p^*)\]
 where $p^*$ is between $p$ and $p_0$
 
-Since $p$ is a root, we have that $0 \approx f(p_0 + (p-p_0)f'(p_0) \implies p \approx p_0 - \frac{f(p_0)}{f'(p_0)} \equiv 1$
+Since $p$ is a root, we have that $0 \approx f(p_0) + (p-p_0)f'(p_0) \implies p \approx p_0 - \frac{f(p_0)}{f'(p_0)} \equiv 1$
 
 This then gives the recurrence: $p_n = p_{n-1} - \frac{f(p_{n-1)}}{f'(p_{n - 1)}}$
 \subsubsection{Algorithm}
