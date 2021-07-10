@@ -20,256 +20,640 @@
   \maketitle
   \tableofcontents
   \newpage
-  \section{Introduction}
-  \subsection{Review of Calculus}
+  \section{Taylor Polynomials}
+  We can approximate the value of $f(x)$ with a point $x_0$ near $x$
+  \[p_n(x) = f(x_0) + f'(x_0)(x-x_0) + \ldots + f^{(n)}(x_0) \frac{(x-x_0)^n}{n!}\]
   \begin{itemize}
-    \item A function $f$ has a \textbf{limit} $L$ at $x_0$, written $\lim_{x \rightarrow x_0}f(x) = L$, if for an arbitrary $\epsilon > 0$, there exists a $\delta > 0$ such that
-  \[|x - x_0| < \delta \implies |f(x) - L| < \epsilon\]
-    \item $f$ is \textbf{continuous} at $x_0$ if
-  \[\lim_{x \rightarrow x_0} f(x) = f(x_0)\]
-    \item A sequence $\{x_n\}$ \textbf{converges} to $x$ if for an arbitrary $\epsilon > 0$, there exists a positive $N$ such that for $n \geq N,$
-  \[|x_n - x| < \epsilon\]
-    \item \textbf{Note}: the following statements are equivalent for a function $f$
-      \begin{itemize}
-        \item $f$ is continuous at $x_0$
-        \item if $\{x_n\}$ converges to $x_0$ then $\lim_{n \rightarrow \infty} f(x_n) = f(x_0)$
-      \end{itemize}
-    \item $f$ is \textbf{differentiable} at $x_0$ if
-      \[f'(x_0) = \lim_{x \rightarrow x_0} \frac{f(x) - f(x_0)}{x - x_0}\]
-      \begin{itemize}
-        \item \textbf{Note}: if $f$ is differentiable at $x_0$, then $f$ is continuous at $x_0$
-      \end{itemize}
-    \item \textbf{Rolle's Theorem}: suppose $f \in C[a,b]$ and $f$ is differentiable on $(a,b)$ and $f(a) = f(b)$. Then there is a number $c \in (a,b)$ such that $f'(c) = 0$
-    \item \textbf{Mean Value Theorem}: suppose $f \in C[a,b]$ and $f$ is differentiable on $(a,b)$, then there is a number $c \in (a,b)$ s.t.
-      \[f'(c) = \frac{f(b) - f(a)}{b - a}\]
-    \item \textbf{Extreme Value Theorem}: suppose $f \in C[a,b]$, $c_1, c_2 \in [a,b]$, and $f(c_1) \leq f(x) \leq c_2$ for all $x \in [a,b]$. If $f$ is differentiable on $(a,b)$ then $c_1, c_2$ either occur at the endpoints $[a,b]$ or where $f' = 0$
-    \item \textbf{Generalized Rolle's Theorem}: let $f(x) \in C[a,b]$ is $n$ times differentiable on $(a,b)$ and $f(x) = 0$ at $n+1$ distinct numbers. Then exists $c \in (x_0, x_n)$ where $f^{(n)}(c) = 0$
-    \item \textbf{Intermediate Value Theomre}: let $f \in C[a,b]$ and $K$ be between $f(a)$ and $f(b0$ then there eixsts $c \in (a,b)$ such that $f(c) = K$
-    \item \textbf{Riemann Integral}: $\int_a^b f(x) \, dx = \lim_{n \rightarrow \infty} \frac{b-a}{n} \sum_{i = 1}^n f(x_i)$
-    \item \textbf{Weighted Mean Value Theorem for Intergrals}: suppose $f, g$ exist on $[a,b]$ and $g(x)$ doesn't change sign on $[a,b]$. Then there exists a $c \in (a,b)$ with
-      \[\int_a^b f(x) g(x) \, dx = f(c) \int_a^b g(x) \, dx\]
-      \begin{itemize}
-        \item When $g(x) = 1$, we have MVT for integrals:
-          \[f(c) = \frac{1}{b-a} \int_a^b f(x) \, dx\]
-      \end{itemize}
-    \item \textbf{Taylor's Theorem}: suppose $f \in C^n[a,b]$, $f^{(n+1)}$ exists on $[a,b]$, $x_0 \in [a,b]$. Then for every $x \in [a,b]$, there exists a $z$ between $x_0$ and $x$ such that
-      \[f(x) = P_n(x) + R_n(x)\]
-      \begin{itemize}
-        \item \textbf{nth Taylor Polynomial}: $P_n(x) = f(x_0) + f'(x_0)(x-x_0) + \ldots + \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$
-        \item \textbf{Remainder Term}: $R_n(x) = \frac{f^{(n+1)}(z)}{(n+1)!}(x-x_0)^{n+1}$
-      \end{itemize}
+    \item we have to know the values of $f(x_0), f'(x_0), \ldots$
   \end{itemize}
-  \subsection{Computer Arithmetic}
-  \textbf{Round-off Error}: error produced when a computer uses arithmetic with only a finite number of digits
-  \subsubsection{Binary Machine Numbers}
-  Real numbers are represent as 64-bits with
+  Remainder term $R_{n+1} = f(x) - p_n(x)$ can be expressed as
+
+  \[R_{n+1} = f^{(n+1)}(t) \frac{(x - x_0)^{n+1}}{(n+1)!} \quad \text{for $t$ between $x, x_0$}\]
+
+  \textbf{Example}: approximate $\sqrt{9.1}$ such that $|\tilde{y} - y| \leq 10^{-6}$
+
+  \begin{enumerate}
+    \item let $x_0 = 9 \implies f(9) = 3, f'(9) = 1/6, f''(9) = 1/108$
+    \item $\tilde{y} = p_2(x_0) = f(9) + f'(9)(9.1 - 9) + f''(9) \frac{1}{2} (9.1 - 9)^2 \approx 3.01662037037$
+    \item $R_{n+1} = R_3 = f'''(t) \frac{(9.1-9)^3}{3!} = \frac{3}{8} \frac{1}{6} \frac{1}{10^3} t^{-5/2}$
+    \item since $t$ is between $9.1$ and $9$, and $t^{-5/2}$ is decreasing, we have $|t^{-5/2} \leq 9^{-5/2}$. Thus
+
+      \[|R_3| \leq \frac{3}{8} \frac{1}{6} \frac{1}{10^3} 9^{-5/2} \approx 2.572 \cdot 10^{-7}\]
+
+      And we have that $|\tilde{y} - y| \leq 2.573 \cdot 10^{-7} \leq 10^{-6}$ as desired
+  \end{enumerate}
+  \section{Origin of Errors}
+  For simple problems,we can find a formula such as
+  \[I_1 = \int_0^1 \sin(x) \, dx = -\cos(1) + \cos(0) = 1 - \cos(1)\]
+
+  We can then use $I_1$ to approximate an answer $\approx 0.45969769413186$
+
+
+  However, for complicated problems such as
+
+  \[I_2 = \int_0^1 \sin(\sin(x)) \, dx\]
+
+  We can't create a simple formula. However, we can approximate (in this case with Reimann Sums with interval $n = 1000$)
+
+  \[\hat{I}_2 = \frac{1}{1000} \sum_{j = 1}^{1000} \sin(\sin((j - \frac{1}{2}) \frac{1}{1000})) \approx 0.430606129785715\]
+
+  Things to consider
   \begin{itemize}
-    \item first bit is a sign indicator, denoted $s$
-      \begin{itemize}
-        \item $0$ positive, $1$ negative
-      \end{itemize}
-    \item 11-bit exponent called the \textbf{characteristic} and denoted $c$
-      \begin{itemize}
-        \item Gives range of exponent $[-1023, 1024]$
-      \end{itemize}
-    \item 52-bit binary fraction called the \textbf{mantissa} denoted $f$
-    \item Floating-point numbers are of the form: $(-1)^s 2^{c - 1023}(1 + f)$
-    \item Smallest positive number has $s = 0, c= 1, f = 0 \implies 2^{-1022}(1+0) \approx 0.22251 \times 10^{-307}$
-      \begin{itemize}
-        \item Numbers that have magnitude less than this result in \textbf{underflow} are generally set to $0$
-      \end{itemize}
-    \item Largest positive number has $s = 0, c= 2046, f = 1- 2^{-52} \implies 2^{1023} (2 - 2^{-52}) \approx 0.17977 \times 10^{39}$
-      \begin{itemize}
-        \item Numbers that have magnitude greater than this result in \textbf{overflow} and usually cause computations to stop
-      \end{itemize}
-  \end{itemize}
-  \subsubsection{Decimal Machine Numbers}
-  Numbers are represented as $k$-digit \textbf{decimal machine numbers}: $\pm 0. d_1d_2\ldots d_k \times 10^n$
-  \begin{itemize}
-    \item floating point form $fl(x)$ is obtained by terminating the mantissa of the number at $k$ decimal digits. 2 ways of doing this
-      \begin{itemize}
-        \item \textbf{Chopping}: chop off digits $d_{k+1}d_{k+2} \ldots$
-        \item \textbf{Rounding}: round $d_k$ based on the value of $d_{k+1}$
-      \end{itemize}
-  \end{itemize}
-  Suppose $p^*$ is an approximation of $p$. Then
-  \begin{itemize}
-  \item \textbf{Absolute Error}: $|p - p^*|$
-  \item \textbf{Relative Error}: $\frac{|p - p^*|}{|p|}$ if $p \neq 0$
+    \item how large is the error between $\hat{I}_2$ and $I_2$
+    \item how fast does error decrease if we increase $n$
   \end{itemize}
 
-  \textbf{Finite Digit Arithmetic} is represented as
+  \textbf{Absolute Error}: $|\hat{x} - x|$
 
-  \[x + y = fl(fl(x) + fl(y))\]
-  \[x - y = fl(fl(x) - fl(y))\]
-  \[x \cdot y = fl(fl(x) \cdot fl(y))\]
-  \[x \div y = fl(fl(x) \div fl(y))\]
+  \textbf{Relative Error}: $\epsilon_x = \frac{\hat{x} - x}{x} \implies \hat{x} = x(1 + \epsilon_x)$
 
-  \subsection{Nested Arithemtic}
-  Accuracy loss due to roundoff can be reduced by rearranging calculations. For example, 
+  \subsection{Sources of Errors}
+  Take the example problem of dropping a mass from height $h = 5$ft. We want to find $t_0$, the time for the mass to hit the floor. Using Newton's law, we can approximate
 
-  \[f(x) = x^3 - 6.1x^2 + 3.2x + 1.5\]
+  \[t_0 = \sqrt{\frac{2h}{g}} = \sqrt{\frac{5}{16}}\]
 
-  Can be represented as
+  However, suppose that our calculator doesn't have a sqrt function. In this case, we need to approximate $\sqrt{\frac{5}{16}}$
 
-  \[f(x) = ((x-6.1)x + 3.2)x + 1.5\]
+  \begin{lstlisting}
+  x = 1
+  for i = 1 to 5:
+    x = (x + $\frac{a}{x})/2$
+  \end{lstlisting}
+  Using this approximation, we get that $t_0 \approx 0.5590169944$. However, this still might be an accurate value of $t_0$
 
-  The latter representation uses less multiplication and isn't as affected by roundoff errors due to multiplications. 
-
-  \subsection{Algorithm + Convergence}
-  \textbf{Stable Algorithm}: small changes to input produce a small change to the output. Otherwise it is an \textbf{Unstable Algorithm}
   \begin{itemize}
-    \item \textbf{Note}: some algorithms can be \textbf{Conditionally Stable}
+    \item \textbf{Error in given data}: input values might not be accurate. Even if we don't need to approximate calculations, the error in the input data can propagate throughout the entire problem, polluting the final answer
+    \item \textbf{Modeling error}: we don't consider all factors in a given problem (e.g. assuming that the only force acting on the mass is $-mg$)
+    \item \textbf{Approximation error}: there are some problems we can't solve, so we have to approximate an answer
+    \item \textbf{Roundoff error}: computers can only operate on a finite number of digits, which creates roundoff error
+  \end{itemize}
+  \section{Error Propagation and Roundoff Error}
+  Most problems have a certain number of inputs $x_1, \ldots, x_n$ and a certain number of output values $y_1, \ldots, y_m$
+
+  Consider the simplest case of 1 input and 1 output value: $y = f(x)$
+
+  If we only have an approximation $\tilde{x}$ of input value $x$, the best we can do is compute $\tilde{y} = f(\tilde{x})$.. This gives a relative error of
+
+  \[\epsilon_y = \frac{\tilde{y} - y}{y} = \frac{f(\tilde{x}) - f(x)}{f(x)} \approx \frac{(\tilde{x} - x)f'(x)}{f(x)} = \frac{xf'(x)}{f(x)} \cdot \frac{\tilde{x} - x}{x} = c_f \cdot \epsilon_x\]
+  \begin{itemize}
+    \item $c_f(x) = \frac{x f'(x)}{f(x)}$ is the \textbf{condition number} of $f$ at $x$ and determines how sensitive a problem is to small changes to input values
+      \begin{itemize}
+        \item \textbf{Well-conditioned}: $|c_f|$ is not much larger than $1$
+        \item \textbf{Ill-conditioned}: $|c_f| \gg 1$
+      \end{itemize}
+  \end{itemize}
+  \textbf{Example}: $f(x) = \frac{1}{x}$
+
+  $c_f(x) = -1$ so $f$ is well conditioned for all $x$. Taking $x = 2$ and $\hat{x} = 1.96$ we have that
+
+  \[x = 2 \quad \hat{x} = 1.96 \quad \epsilon_{\hat{x}} = \frac{\hat{x} - x}{x} = -0.02\]
+  \[y = f(x) = 0.5 \quad \hat{y} = f(\hat{x}) \approx 0.5102 \quad \epsilon_{\hat{y}} = \frac{\hat{y} - y}{y} \approx 0.0204\]
+
+  Thus $|\epsilon_{\hat{x}}| \approx |\epsilon_{\hat{y}}|$
+
+  \textbf{Example}: $f(x) = \ln{x}$
+
+  $c_f(x) = \frac{1}{\ln{x}}$ so for $x = 1.01$, we have that $c_f(x) \approx 100$. Using the Taylor approximation of $\ln{x} \approx 0 + 1 (x - 1)$ for $x$ and choosing $x = 1.01$ and $\hat{x} = 1.02$, we have that
+
+  \[x = 1.01 \quad \hat{x} = 1.02 \quad \epsilon_{\hat{x}} = \frac{\hat{x} - x}{x} \approx 0.0099\]
+
+  \[y = f(x) \approx 0.00995 \quad \hat{y} = f(\hat{x}) \approx 0.0198 \quad \epsilon_{\hat{y}} = \frac{\hat{y} - y}{y} \approx 0.99\]
+
+  Thus $|\epsilon_{\hat{y}}| \approx 100 \epsilon_{\hat{x}}$
+
+  \subsection{Error Propagation for Arithmetic Operations}
+
+  Let $x, y$ be exact values and let $\tilde{x}, \tilde{y}$ be approximate values
+
+  \begin{itemize}
+  \item \textbf{Product}: $z = x \cdot y \implies \tilde{z} = \tilde{x} \tilde{y} = x(1 + \epsilon_x) y (1 + \epsilon_y) = z(1 + \epsilon_x + \epsilon_y + \epsilon_x \epsilon_y) \implies \epsilon_z = \epsilon + \epsilon_y + \epsilon_x \epsilon_y \approx \epsilon_x + \epsilon_y$
+  \item \textbf{Division}: $\epsilon_z \approx \epsilon_x + \epsilon_{1/y}$ using $f(x) = 1/x$
+  \item \textbf{Sum}: $z = x + y \implies \epsilon_z = \frac{x(1 + \epsilon_x) + y(1 + \epsilon_y) - (x + y)}{x+y} = \frac{x}{x + y} \epsilon_x + \frac{y}{x + y} \epsilon_y \implies |\epsilon_z| \leq \left| \frac{x}{x + y} \right| |\epsilon_x| + \left| \frac{y}{x + y} \right| |\epsilon_y|$
+    \begin{itemize}
+      \item if $x \approx -y$, we have that $\left| \frac{x}{x + y} \right|$ and $\left| \frac{y}{x + y} \right|$ are much greater than $1$, and cause a larger magnification of relative errors. This is called \textbf{subtractive cancellation}
+
+        \textbf{Example}: $x = 101, y = - 100 \implies \frac{x}{x + y} = 101, \frac{y}{x + y} = -100$
+      \item if $x, y$ are opposite signs but different magnitude, $\left| \frac{x}{x + y} \right|$ and $\left| \frac{y}{x + y} \right|$ are not much larger than than $1$. This is fine
+
+        \textbf{Example}: $x = 10, y = -1 \implies \frac{x}{x+y} = \frac{10}{9}, \frac{y}{x+y} = \frac{-1}{9}$
+      \item if $x, y$ have the same sign, $\left| \frac{x}{x + y} \right|$ and $\left| \frac{y}{x + y} \right|$ are less than $1$. Added together, they give $1$. Thus $|\epsilon_z| \leq \max(|\epsilon_x|, |\epsilon_y|)$
+
+        \textbf{Example}: $x = 3, y = 7 \implies \frac{x}{x+ y} = \frac{3}{10}, \frac{y}{x + y} = \frac{7}{10}$
+
+    \end{itemize}
+  \textbf{UPSHOT}: None of these operations cause significant magnification of relative errors, except \textbf{subtractive cancellation}
   \end{itemize}
 
-  Suppose that an error with magnitude of $E_0 > 0$ is introduced and after $n$ operations it becomes $E_n$
+  \subsection{Forward Error Analysis}
+  We try to find the upper bound for relative error at each stage of the algorithm
   \begin{itemize}
-    \item $E_n \approx C_n E_0$ where is $C$ is a constant then there is a \textbf{linear} error growth
-    \item $E_n \approx C^n E_0$ then there is an \textbf{exponential} error growth
+    \item start with the bounds for the errors in the given data
+    \item when a function $f$ is applied, we multiply the error bound by $|c_f|$
+    \item when arithmetic operators are used on the values, we use the above error propagation formulas
+    \item each time we round, we add $|\epsilon_M|$ to the error bound
   \end{itemize}
-  \subsubsection{Rate of Convergence}
 
-  \textbf{Definition 1}: let $\{\beta_n\} \rightarrow 0$ and $\{\alpha_n\} \rightarrow \alpha$. If there is a constant $k$ such that
+  \textbf{Example}: $y = f(x) = 1 - \cos{x}$ for $x = 10^{-5}$ using double precision machine numbers
 
-  \[|\alpha_n - a| \leq k | \beta_n|\]
+  $c_f = \frac{x \sin{x}}{1 - \cos{x}} \approx \frac{x \cdot x}{x^2/2}$ so the function is \textbf{well-conditioned} and has unavoidable error of $|c_f| \epsilon_M + \epsilon_M \approx 3 \cdot 10^{-16}$
 
-  then $\{\alpha_n\}$ converges to $\alpha$ with a \textbf{rate of convergence} of $O(\beta_n)$
+  \medskip
 
-  Usually $\bega_n = \frac{1}{n^p}$ for $p > 0$
+  In contrast, consider the algorithm $y_1 = \cos{x}, \quad y = 1 - y_1$. Using machine arithmetic, we have
 
-  \textbf{Definition 2}: suppose $\lim_{h \rightarrow 0} G(h) = 0$ and $\lim_{h \rightarrow 0} F(h) = L$ and there is a $k$ such that
+  $\hat{x} = fl(x), \quad \tilde{y}_1 = \cos{\hat{x}}, \quad \hat{y}_1 = fl(\tilde{y}), \quad \tilde{y} = 1 - \hat{y}_1, \quad \hat{y} = fl(\tilde{y})$. This gives relative errors of
 
-  \[|F(h) - L| \leq k|G(h)|\]
+  $\left| \frac{\hat{x} - x}{x} \right| \leq \epsilon_M, \quad \left| \frac{\tilde{y}_1 - y_1}{y_1} \right| \leq c_1 \epsilon_M$ with $c_1 = \left| \frac{x(-\sin{x})}{\cos{x}} \right| \approx 10^{-10}, \quad \left| \frac{\hat{y}_1 - y_1}{y_1} \right| \leq c_1 \epsilon_M + \epsilon_M$
 
-  Then $F(h) = L + O(G(h))$, where usually $G(h) = h^p$ for $p > 0$
+  $\left| \frac{\tilde{y} - y}{y} \right| \leq c_2(c_1 \epsilon_M + \epsilon_M)$ with $c_2 = \left| \frac{y_1 (-1)}{1 - y_1}\right| \approx 2 \cdot 10^{10}$
 
-\section{Solution of Equations in One Variable}
-\subsection{Bisection Method}
-Suppose $f$ is a cont function defined on $[a,b]$ with $f(a)$ and $f(b)$ of opposite signs. By IVT, there is a $p \in (a,b)$ with $f(p) = 0$
+  Thus we have
+
+  \[\left| \frac{\hat{y} - y}{y} \right| \leq c_2(c_1 \epsilon_M + \epsilon_M) + \epsilon_M \approx 2 \epsilon_M + 2 \cdot 10^{10} \epsilon_M + \epsilon_M \approx 2 \cdot 10^{-6}\]
+
+  Which is much larger than the unavoidable error, and thus this algorithm is \textbf{numerically unstable}
+
+  \section{Unavoidable Error, Numerically Stable/Unstable Algorithms}
+
+  We want to compute $f(x)$ for an input $x$. Assuming there are no measurement errors, in the \textbf{ideal algorithm} we would
+  \begin{itemize}
+    \item round the input to the closest machine number $\hat{x} = fl(x)$
+    \item use $\hat{x}$ and compute $\tilde{y} = f(\hat{x})$ with some extra precision
+    \item round this result: $\hat{y} = fl(\tilde{y})$
+  \end{itemize}
+
+  This results in \textbf{unavoidable error}:
+
+  \[|\epsilon_{\hat{y}}| \leq |c_f(x)| \epsilon_M + \epsilon_M\]
+
+  In typical computations, we break up the computation of $f(x)$ into a sequence of operations available on our machine
+
+  For example, we can use the algorithm we used from the previous section to estimate $y = 1 - \cos(x)$ at $x = 5 \cdot 10^{-4}$
+
+  \begin{lstlisting}
+format compact; format long g
+x = 5e-4;
+yalg1 = 1 - cos(x) 
+  > 1.24999997352937e-07
+  \end{lstlisting}
+  \textbf{Relative Error}
+
+  We can find relative error by using symbolic toolbox and vpa to use 30 digits accuracy
+\begin{lstlisting}
+X = sym(5*10^-4)
+Y = vpa(1 - cos(X))
+  > Y = 0.00000012499999739583335503472212534102
+relerr_alg1 = double(yalg1-Y)/Y
+  > relerr_alg1 = -3.4317095325145e-10
+  \end{lstlisting}
+
+  Thus relative error is about $3.4 \cdot 10^{-10}$
+
+  \textbf{Unavoidable error}
+
+  \begin{lstlisting}
+cf = x*sin(x)/(1-cos(x))
+  > cf = 1.99999995901967
+epsM = 1e-16;
+unav_err = cf*epsM + epsM
+  > unav_err = 2.99999995901967e-16
+  \end{lstlisting}
+  Since the error from algorithm 1 is $3.4 \cdot 10^{-10}$ which is much larger than the unavoidable error $3 \cdot 10^{-16}$, algorithm 1 is \textbf{numerically unstable}. This large error comes from a few factors:
+
+  Note that $y_1 = \cos(x)$ is rounded to the closest machine number, resulting in an error as large as $\epsilon_M$
+
+  When we compute $y = 1- y_1$ (note that $y_1 \approx 1$), we have \textbf{subtractive cancellation} so $\epsilon_{y_1}$ will be multiplied by $\left| \frac{y_1}{1 - y_1} \right|$
 
 \begin{lstlisting}
-INPUT: endpoints $a, b$; tolerance TOL, max iterations $N_0$
-OUTPUT: approximate solution $f(p) = 0$ or FAILURE
-
-i = 1;
-FA = f(a);
-while i $\leq N_0$:
-  p = a + (b-a)/2; 
-  FP = f(p);
-  if FP = 0 or (b-a)/2 < TOL:
-    output(p);
-    STOP;
-  i = i + 1;
-  if FA $\cdot$ FP > 0:
-    a = p;
-    FA = FP;
-  else:
-    b = p;
-    (FA unchanged)
-Output FAILURE;
+y1 = cos(x);
+factor = abs(y1/(1-y1)) 
+  > factor = 7999999.16941204
+factor*epsM
+  > ans = 7.99999916941204e-10
 \end{lstlisting}
+Thus the roundoff error in $y_1$ may cause an error as large as $8 \cdot 10^{-10}$, corresponding to the order of magnitude in the error from algorithm 1
 
-There are various possibilities for TOL:
+A better algorithm would be to multiply and divide $1 - \cos{x}$ by $1 + \cos{x}$, then replacing $1 - \cos^2{x}$ using $\sin^2{x} + \cos^2{x} = 1$
+
+\[ y = 1 - \cos{x} = \frac{(1 - \cos{x})(1 + \cos{x})}{1 + \cos{x}} = \frac{\sin^2{x}}{1 + \cos{x}}\]
+
+This algorithm is free from subtractive cancellation. Thus
+\begin{lstlisting}
+yalg2 = sin(x)^2/(1+cos(x))
+  > yalg2 = 1.24999997395833e-07
+relerr_alg2 = double(yalg2-Y)/Y
+  > relerr_alg2 = 5.55505114272964e-18 
+\end{lstlisting}
+This is the same order of the unavoidable error, or less. Thus algorithm 2 is \textbf{numerically stable}
+\section{Machine Numbers and Machine Arithmetic}
+A Matlab program such as
+\begin{lstlisting}
+x = 0.1;
+y1 = cos(x);
+y = y - y1
+\end{lstlisting}
+is not evaluated exactly. Machines can only store up to a certain number of digits fro each number and use \textbf{machine arithmetic}
+\subsection{Base 10 Machine Numbers}
+Numbers are represented in decimal notation. An $(n+1)$-digit base 10 number with digits $d_j \in \{0, \ldots, 9\}$ is
+
+\[(d_0 . d_1 d_2 \ldots d_n)_{10} = d_0 + d_1 \cdot 10^{-1} + d_2 \cdot 10^{-2} + \cdots + d_n \cdot 10^{-n}\]
+
+We can normalize numbers to the form $x = \pm q \cdot 10^e$ where
 \begin{itemize}
-  \item $|p_N - p_{N-1}| < \epsilon$
-  \item $\frac{|p_N - p_{N-1}|}{|p_N|} < \epsilon$
-  \item $|f(p_N)| < \epsilon$
+  \item $q$ is the \textbf{mantissa}
+  \item $e$ is the \textbf{exponent}
+  \item the first digit $d_0$ is nonzero
+\end{itemize}
+For example, we can represent $x = 12345$ as
+\[x = 12345 = 1.2345 \cdot 10^4\]
+
+Thus simple base 10 machine numbers can be presented as
+
+\[\hat{x} = \begin{cases} \pm (d_0. d_1 d_2 \ldots d_n)_{10} \cdot 10^e & d_j \in \{0, \ldots, 9\},\quad d_0 \neq 0, \quad e \in Z, \quad e_{\min} \leq e \leq e_{\max} \\ 0 \end{cases}\]
+\begin{itemize}
+  \item largest machine number is $x_{\max} = (9.99 \ldots 9)_{10} \cdot 10^{e_{\max}} = (10 - 10^{-n}) \cdot 10^{e_{\max}} \approx 10^{e_{\max} + 1}$
+  \item smallest positive machine number is $x_{\min} = (1.00 \ldots 0) \cdot 10^{e_{\min}} = 10^{e_{\min}}$
 \end{itemize}
 
-Issues:
+We can round a number $\hat{x} = fl(x)$
 \begin{itemize}
-  \item there are some sequences where $p_n - p_{n-1} \rightarrow 0$ but the sequence diverges
-  \item situations where $f(p_n) \approx 0$ while $p_n$ is far from $p$
-  \item relatively slow to converge
-  \item good intermediate approximation might be accidently discarded
+  \item normalize $x$ into the form $\pm q \cdot 10^e$
+  \item if $e_{\min} \leq e \leq e_{\max}$, find the nearest mantissa $\hat{q} = (d_0.d_1 d_2 \ldots d_n)_{10}$ then set $\hat{x} = \pm \hat{q} \cdot 10^e$
+  \item if $e > e_{\max}$ then \textbf{overflow} occurs
+  \item if $e < e_{\min}$ then \textbf{underflow} occurs so let $\hat{x}$ be the closer of $0$ or $x_{\min}$
 \end{itemize}
-Benefits:
+
+\textbf{Example}: assume we have a machine with $n = 3, e_{\min} = -99$, and $e_{\max} = 99$. Find $\hat{x} = fl(x)$ for $x = \frac{2}{300}$
+
+We have that $x = + \frac{20}{3} \cdot 10^{-3}$, so $q = \frac{20}{3}$ and $e = -3$, meaning that we don't have overflow or underflow
+
+To approximate the mantissa $q = \frac{20}{3}$, we note that $\frac{20}{3} = 6.6666 \ldots$
 \begin{itemize}
-  \item always converges to a solution
+  \item $\hat{q}_\text{left} = (6.666)$
+  \item $\hat{q}_\text{left} = (6.667)$ (closer so we round to this)
 \end{itemize}
-Has a rate of convergence of $O(\frac{1}{2^n})$: $p_n = p + O(\frac{1}{2^n})$
-\subsection{Fixed-Point Iteration}
-\textbf{Fixed point}: a point $p$ such that $f(p) = p$. Fixed-point and root-finding are similar in that:
+
+Thus we have that
+
+\[\hat{x} = fl(x) = + (6.667)_{10} \cdot 10^{-2}\]
+
+\bigskip
+
+To find the upper bound for rounding error, note that
+
+\[\left| \frac{\hat{x} - x}{x} \right| = \frac{|\hat{q} \cdot 10^e - q \cdot 10^e|}{q \cdot 10^e} = \frac{|\hat{q} - q|}{q}\]
+
+Since $q \geq 1$ and $|\hat{q} - q| \leq 0.5 \cdot 10^{-n}$ (spacing between 2 successive mantissa values is $10^{-n}$ and the largest possible value is half of this), rounding error is bounded by
+
+\[\left| \frac{\hat{x} - x}{x} \right| = \frac{|\hat{q} - q|}{q} \leq 0.5 \cdot 10^{-n}\]
+
+Thus \textbf{machine epsilon} for base 10 system is $\epsilon_M = 0.5 \cdot 10^{-n}$
+
+\subsection{Base 2 Machine Numbers}
+Numbers are represented in binary notation. An $(n+1)$-digit base 2 number with digits $d_j \in \{0, \ldots, 1\}$ is
+
+\[(d_0 \cdot d_1 d_2 \ldots d_n)_2 = d_0 \cdot 2^0 + d_1 \cdot 2^{-1} + \ldots + d_n \cdot 2^{-n}\]
+We can normalize numbers to the form $x = \pm q \cdot 2^e$ where
 \begin{itemize}
-  \item given a root problem $f(p) = 0$, we can define a $g$ with a fixed point at $p$: $g(x) = x - f(x)$
+  \item $q$ is the \textbf{mantissa}
+  \item $e$ is the \textbf{exponent}
+  \item the first digit $d_0$ is nonzero
+\end{itemize}
+For example, we can represent $x = (1101)_2$ as
+\[x = (1101)_2 = (1.101)_2 \cdot 2^3\]
+
+Thus simple base 2 machine numbers can be presented as
+
+\[\hat{x} = \begin{cases} \pm (1. d_1 d_2 \ldots d_n)_{2} \cdot 2^e & d_j \in \{0, \ldots, 1\}, \quad e \in Z, \quad e_{\min} \leq e \leq e_{\max} \\ 0 \end{cases}\]
+\begin{itemize}
+  \item largest machine number is $x_{\max} = (1.1 \ldots 1)_{2} \cdot 2^{e_{\max}} = (2 - 2^{-n}) \cdot 2^{e_{\max}} \approx 2^{e_{\max} + 1}$
+  \item smallest positive machine number is $x_{\min} = (1.00 \ldots 0)_2 \cdot 2^{e_{\min}} = 2^{e_{\min}}$
+\end{itemize}
+We can round a number $\hat{x} = fl(x)$
+\begin{itemize}
+  \item normalize $x$ into the form $\pm q \cdot 2^e$
+  \item if $e_{\min} \leq e \leq e_{\max}$, find the nearest mantissa $\hat{q} = (d_0.d_1 d_2 \ldots d_n)_{2}$ then set $\hat{x} = \pm \hat{q} \cdot 2^e$
+  \item if $e > e_{\max}$ then \textbf{overflow} occurs
+  \item if $e < e_{\min}$ then \textbf{underflow} occurs so let $\hat{x}$ be the closer of $0$ or $x_{\min}$
+\end{itemize}
+
+\textbf{Example}: How does Matlab represent $x = .1$ Matlab uses binary machine numbers with $n = 53, e_{\min} = -1021, e_{\max} = 1024$. Find $\hat{x} = fl(x)$ for $x = \frac{1}{10}$
+
+We have that $x = + \frac{16}{10} \cdot 2^{-4}$, so $q = \frac{16}{10}$ and $e = -4$, meaning that we don't have overflow or underflow
+
+To approximate the mantissa $q = \frac{16}{10}$, we note that $\frac{16}{10} = (1.10011001100 \ldots)_2$
+\begin{itemize}
+  \item $\hat{q}_\text{left} = (1.10011001100 \ldots 11001)_2$
+  \item $\hat{q}_\text{right} = (1.10011001100 \ldots 11010)_2$ (this is closer so we round to this)
+\end{itemize}
+
+Thus we have that
+
+\[\hat{x} = fl(x) = + \hat{q}_\text{right} \cdot 2^{-3}\]
+
+To find the upper bound for rounding error, note that
+
+\[\left| \frac{\hat{x} - x}{x} \right| = \frac{|\hat{q} \cdot 2^e - q \cdot 2^e|}{q \cdot 2^e} = \frac{|\hat{q} - q|}{q}\]
+
+Since $q \geq 1/2$ and $|\hat{q} - q| \leq 0.5 \cdot 2^{-n}$ (spacing between 2 successive mantissa values is $2^{-n}$ and the largest possible value is half of this), rounding error is bounded by
+
+\[\left| \frac{\hat{x} - x}{x} \right| = \frac{|\hat{q} - q|}{q} \leq 0.5 \cdot 2^{-n}\]
+
+Thus \textbf{machine epsilon} for base 2 system is $\epsilon_M = 2^{-n-1}$
+\subsection{IEEE654 Machine Numbers}
+
+The issue with base 2 machine numbers is that there is a huge hole around $0$; the distance between $0$ and $x_{\min}$ is much larger than the distance between $x_{\min}$ and the next largest number $x_1 = (1 + 2^{-n})x_{\min}$
+\begin{itemize}
+  \item Rounding numbers $|x| > x_{\min}$ causes  a relative error of size $\leq \epsilon_M$. However, rounding numbers $|x| < x_{\min}$ gives either $0$ or $x_{\min}$, causing relative error of size $\leq 100 \%$
+  \item $y > x$ and $y - x > 0$ have different meanings. For machine numbers $x = x_{\min}$ and $y = x_1$
     \begin{itemize}
-      \item If $g$ has a fixed point at $p$, then $f(x) = x - g(x)$ has a zero at $p$
+      \item $y > x$ evaluates to true since $x_1 > x_{\min}$
+      \item $y - x > 0$ evaluates to false since the computer computes $y - x = x_1 - x_{\min} = 2^{-n} \cdot 2^{e_{\min}}$ which is rounded to $0$
     \end{itemize}
 \end{itemize}
-\textbf{Theorem}: conditions for existence and uniqueness of a fixed point:
+We fix this by adding \textbf{subnormal numbers} with spacing $2^{-n}\cdot 2^{e_{\min}}$
+\[ \pm(0.d_1 \ldots d_n)_2 \cdot 2^{e_{\min}}\]
+
+Now rounding a number $x$ with $|x| \leq x_{\min}$ is more well-behaved
+
+\[\left|\frac{\hat{x} - x}{x} \right| \leq \begin{cases} 2^{-n -1} & |x| \geq x_{\min} \\ \min(2^{-n -1} \frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+
+This results in \textbf{gradual underflow} since we generate values slightly smaller than $x_{\min}$
+
+\textbf{How to handle overflow, division by 0, 0/0, etc}
+
+We introduce a few numbers to handle the above issues
 \begin{itemize}
-  \item if $g \in C[a,b]$ and $g(x) \in [a,b]$ for all $x \in [a,b]$ then $g$ has a least 1 fixed point in $[a,b]$
-  \item if $g'(x)$ exists on $(a,b)$ and a positive $k < 1$ exists such that $|g'(x)| \leq k$ for all $x \in (a,b)$ then there is exactly 1 fixed point in $[a,b]$
+  \item  $+Inf$ and $-Inf$ for handling overflow
+  \item $+0$ and $-0$ to handle underflow, but still keep sign
+  \item $NaN$ for indeterminate expressions like $0/0$ or $Inf - Inf$
 \end{itemize}
-\textbf{Algorithm}: idea is to find $p$ using $p_n = g(p_{n-1})$
-\begin{lstlisting}
-INPUT: $p_0$ initial, TOL, $N_0$ 
-OUTPUT: $p$ or FAILURE
 
-i = 1;
-while i $\leq N_0$:
-  p = g($p_0$);
-  if $|p - P_0| <$ TOL;
-    OUTPUT $p$;
-    STOP;
-  i += 1;
-  $p_0 = p$
-Output FAILURE
-\end{lstlisting}
-\textbf{Theorem}: let $g \in C[a,b]$, $g(x) \in [a,b]$ for all $x$, $g'(x)$ defined on $(a,b)$ where $|g'(x)| \leq k < 1$. Then $p_n = g(p_{n-1})$ converges to $p$
+UPSHOT: IEEE754 machine numbers have the following form with $d_j \in \{0, 1\}$ and integer $e$
 
-\textbf{Proof}: since $p_n \in [a,b]$ and $|g'(x)| \leq k < 1$, by MVT we have for $x^* \in [a,b]$
-\[|p_n - p| = |g(p_{n-1}) - g(p)| = |g'(x^*)||p_{n-1} - p| \leq k|p_{n-1} - p|\]
-This leads to
-\[|p_n - p| \leq k|p_{n-1} - p| \leq k^2|p_{n-2} - p| \leq \ldots \leq k^n|p_0 - p| \rightarrow 0\]
+\[\hat{x} = \begin{cases} \pm (1.d_1 \ldots d_n)_2 \cdot 2^e & e_{\min} \leq e \leq e_{\max} \\ \pm (0.d_1 \ldots d_n)_2 \cdot 2^{e_{\min}} & \text{subnormal numbers} \\ Inf, -Inf, NaN & \text{special values} \end{cases}\]
 
-\subsection{Newton's Method and its Extentions}
-Let $f \in C^2[a,b]$, $p_0 \in [a,b]$, $f'(p_0) \neq 0$, and $|p- p_0|$ be small. Then we can use Taylor Polynomials:
-\[f(p) = f(p_0) + (p-p_0)f'(p_0) + \frac{(p-p_0)^2}{2}f''(p^*)\]
-where $p^*$ is between $p$ and $p_0$
+\subsection{Machine Arithmetic}
+For machine numbers $x, y$, $x + y$ is usually not a machine number. Thus the result is rounded to become a machine number
 
-Since $p$ is a root, we have that $0 \approx f(p_0) + (p-p_0)f'(p_0) \implies p \approx p_0 - \frac{f(p_0)}{f'(p_0)} \equiv 1$
-
-This then gives the recurrence: $p_n = p_{n-1} - \frac{f(p_{n-1)}}{f'(p_{n - 1)}}$
-\subsubsection{Algorithm}
-\begin{lstlisting}
-INPUT: $p_0$, TOL, $N_0$ 
-OUTPUT: $p$ or FAILURE
-
-i = 1;
-while i $\leq N_0$:
-  $p = p_0 - f(p_0)/f'(p_0)$;
-  if $|p - P_0| <$ TOL:
-    Output $p$;
-  $i += 1$;
-  $p_0 = p$;
-Output FAILURE;
-\end{lstlisting}
-Issues:
+For operations like $y = sqrt(x)$ are implemented as follows: for an input $x$
 \begin{itemize}
-  \item Main issue of Newton's method is that we have to know the value of $f'(x)$. Solved using \textbf{Secant Method}
+  \item find the exact result $Y = \sqrt{x}$ (using extra digits)
+  \item return the machine number $y = fl(Y)$
 \end{itemize}
-\subsubsection{Second Method}
-Uses $f(p_{n-1}) \approx \frac{f(p_{n-1}) - f(p_{n - 2})}{p_{n-1} - p_{n-2}}$ to create the recurrence formula:
-\[ p_n = p_{n - 1} - \frac{f(p_{n-1})(p_{n - 1} - p_{n-2})}{f(p_{n-1} - f(p_{n-1})}\]
-\begin{lstlisting}
-INPUT: initial $p_0, p_1$; TOL, $N_0$ 
-OUTPUT: solution $p$ or FAILURE
+This usually results in an error $|\epsilon_y| \leq \epsilon_M$
 
-$i = 2$;
-$q_0 = f(p_0)$;
-$q_1 = f(p_1)$;
-while $i \leq N_0$:
-  $p = p_1 - q_1(p_1 - p_0)/(q_1 - q_0)$;
-  if $|p - p_1| <$ TOL:
-    OUTPUT $p$
-  $i += 1$;
-  $p_0 = p_1$;
-  $q_0 = q_1$;
-  $p_1 = p$;
-  $q_1 = f(p)$;
-Output FAILURE;
+UPSHOT: each arithmetic operation in a program causes a relative error of size $\leq \epsilon_M$
+
+\textbf{Example}: for Matlab code $x = .1; y = 1 - cos(x)$, the machine performs the following operations to find $\hat{y}$
+\begin{itemize}
+  \item $\hat{x} = fl(.1) \quad$ round $.1$ to the closest machine number
+  \item $Y_1 = \cos(\hat{x}) \quad$ find the true value of $\cos(\hat{x})$ with extra accuracy
+  \item $\hat{y}_1 = fl(Y_1) \quad$ round $Y_1$ to the closest machine number
+  \item $Y = 1 - \hat{y}_1 \quad$ find the true result of $1 - \hat{y}_1$ with extra accuracy
+  \item $\hat{y} = fl(Y) \quad$ round $Y$ to the closest machine number
+\end{itemize}
+\section{Linear Systems}
+\textbf{Example} find $x_1, x_2, x_3$ such that 
+
+\begin{align*}
+  2x_1 + 3x_2 + x_3 &= 1 \\
+  4x_1 + 3x_2 + x_3 &= -2\\
+  -2x_1 + 2x_2 + x_3 &= 6\\
+\end{align*}
+We can write this using matrix-vector notation
+\[ \left[ \begin{array}{ccc}
+    2 & 3 & 1 \\
+    4 & 3 & 1 \\
+    -2 & 2 & 1
+\end{array} \right]
+%
+\left[ \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+\end{array} \right]
+ =
+\left[ \begin{array}{c}
+    1 \\
+    -2 \\
+    6 \\
+\end{array} \right]
+\]
+
+A matrix $A$ is \textbf{singular} if there exists a nonzero vector $x$ such that $Ax = 0$. Since $Ax$ is a linear combination of the column vectors: $Ax = x_1 \cdot (\text{col } 1) + x_2 \cdot (\text{col } 2) + \ldots$
+\begin{itemize}
+  \item a matrix is singular if the columns are linearly dependent (either no solution or infinitely many solutions)
+  \item a matrix is nonsingular if the columns are linearly independent (has a unique solution)
+\end{itemize}
+
+Solving the example matrix above using \textbf{elimination} gives
+\[ \left[ \begin{array}{ccc}
+    2 & 3 & 1 \\
+    0 & -3 & -1 \\
+    0 & 0 & 1
+\end{array} \right]
+%
+\left[ \begin{array}{c}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+\end{array} \right]
+ =
+\left[ \begin{array}{c}
+    1 \\
+    -4 \\
+    1 \\
+\end{array} \right] \]
+
+Note that the entries on the diagonal of the first matrix are called \textbf{pivots}
+
+This translates to the following equations
+
+\begin{align*}
+  1 x_3 &= 1 \\
+  -3x_2 - x_3 &= -4 \\
+  2x_1 + 3x_2 + x_3 &= 1
+\end{align*}
+
+Using \textbf{back substituion}, we get $x_3 = 1, x_2 = 1, x_3 = -3/2$
+
+Note that the original linear system $Ax = b$ was transformed into a new linear system $Ux = y$ with an upper triangular matrix $U$. This means that original linear system is nonsingular
+
+We can also use \textbf{LU Decomposition} to solve this equation
+
+\[ L = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}, \quad U = \begin{bmatrix} 2 & 3 & 1 \\ 4 & 3 & 1 \\ -2 & 2 & 1 \end{bmatrix}\]
+
+Perform Gaussian Elimination on $U$ and adjust $L$ accordingly
+
+\[ L = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ -1 & 0 & 1 \end{bmatrix}, \quad U = \begin{bmatrix} 2 & 3 & 1 \\ 0 & -3 & -1 \\ 0 & 5 & 2 \end{bmatrix}\]
+
+\[ L = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ -1 & -\frac{5}{3} & 1 \end{bmatrix}, \quad U = \begin{bmatrix} 2 & 3 & 1 \\ 0 & -3 & -1 \\ 0 & 0 & \frac{1}{3} \end{bmatrix}\]
+
+From here we can use forward substitution to solve $Ly = b$
+
+\[ \left[ \begin{array}{ccc}
+    1 & 0 & 0 \\
+    2 & 1 & 0 \\
+    -1 & -\frac{5}{3} & 1
+\end{array} \right]
+%
+\left[ \begin{array}{c}
+    y_1 \\
+    y_2 \\
+    y_3 \\
+\end{array} \right]
+ =
+\left[ \begin{array}{c}
+    1 \\
+    -2 \\
+    6 \\
+\end{array} \right] \]
+which gives $y_1 = 1, y_2 = -4, y_3 = \frac{1}{3}$. 
+
+The last step involves using \textbf{substitution} to solve for $x$ in $Ux = y$, yielding $x_3 = 1, x_2 = 1, x_1 = -\frac{3}{2}$
+
+The benefit of LU decomposition is that if we're solving multiple linear systems with the same matrix $A$ ($Ax = b$ and $A\tilde{x} = \tilde{b})$, we only need to do Gaussian elimination once
+\begin{itemize}
+  \item Use Gaussian elimination on matrix $A$ to find $LU$ decomposition $A= LU$
+  \item solve $Ly = b$ using forward substitution, then solve $Ux = y$ using back substitution
+  \item solve $L \tilde{y} = \tilde{b}$ using forward substitution, then solve $U\tilde{x} = \tilde{y}$ using back substitution
+\end{itemize}
+
+The pivot points of matrix $U$ during Gaussian elimination must be nonzero. If it so happens that a pivot is $0$, we need to perform \textbf{pivoting} (swapping the rows), creating a matrix $\tilde{A}$, and then solving $\tilde{A}x = \tilde{b}$ using $LU$ decomposition
+
+If pivoting breaks down at a particular column $j$ (meaning that all pivot candidates in column $j$ are zero), then the matrix $A$ is \textbf{singular}
+
+\textbf{Note}: should always select the pivot with the largest absolute value to avoid unnecessary error
+
+\subsection{Solving linear Systems in Matlab}
+
+To solve $Mx = b$ where $M$ is in upper or lower triangular, we use $x=M$\textbackslash$b$ which will use back or forward substitution appropriately
+
+To solve $Ax = b$
+\begin{lstlisting}
+[L, U, p] = lu(A, 'vector'); % Gaussian elimination with pivoting, returns p as a vector
+y = L\b(p);                  % forward substitution
+x = U\y;                     % back sbustitution
+
+x = A\b                      % executes the 3 commands above
 \end{lstlisting}
-\subsubsection{Method of False Position}
-Problem of Secant Method is that the intermediary values we use are sometimes outside the desired bracket. False Position ensures that intermediary values are inside the desired bracket by testing if $f(p_0)$ and $f(p_1)$ have opposite signs
+
+To solve multiple linear equations $Ax = b$ and $A\tilde{x} = \tilde{b}$
+\begin{lstlisting}
+[L, U, p] = lu(A, 'vector'); % Gaussian elimination with pivoting to find L, U, p
+x = U\(L\b(p));              % use L, U, p to solve Ax = b
+xh = U\(L\bh(p));            % use L, U, p to solve A xh = bh
+\end{lstlisting}
+
+\subsection{Matrix Inverses}
+
+Another way to solve $Ax = b$ is to use inverse $x = A^{-1}b$
+
+We can find $A^{-1}$ by using Gaussian elimination to find $L, U, p$ and then solving linear systems for $n$ right-hand side vectors
+
+\[ \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix}, \ldots, \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}\]
+
+This will generate $n$ solution vectors, who make up the columns of $A^{-1}$
+
+\subsection{Number of Operations}
+Elimination updates on a matrix $U$ subtract multiples of the pivot role, so updates look like
+\[ u_{42} = u_{42} - l_{42} \cdot u_{22} \]
+On a computer, this involves
+\begin{itemize}
+  \item \textbf{Memorization Access}: need to access the values of $u_{42}, l_{42}, u_{22}$ 
+  \item \textbf{Multiplication}
+  \item \textbf{Addition/Subtraction}
+\end{itemize}
+
+Consider the following operations:
+\begin{itemize}
+  \item \textbf{Finding} $L, U, p$ costs $\frac{1}{3}n^3 + O(n^2)$ operations
+
+  Elimination of $n-1$ columns costs $n(n-1) + (n-1)(n-2) + \cdots + 2 \cdot 1 = \frac{1}{3}n^3 + O(n^2)$
+
+  \item \textbf{Solving} $Ax = b$ if we know $L, U, p$ costs $n^2$ operations
+
+    Solving $Ly = b$ and finding $y_1, y_2 \ldots, y_n$ cost $0 + 1 + \cdots + (n-1) = \frac{n(n-1)}{2}$ operations
+
+    Solving $Ux = y$ and finding $x_{n}, x_{n-1}, \ldots, x_{1}$ costs $1 + 2 + \cdots + n = \frac{(n+1)n}{2}$ operations
+  \item \textbf{Finding} $A^{-1}$ costs $\frac{2}{3}n^3 + O(n^2)$ operations
+
+  Finding first column costs $\frac{n(n-1}{2}$ for forward substitution and $\frac{(n+1)n}{2}$ for back substitution
+
+  Finding first column costs $\frac{(n-1)(n-2}{2}$ for forward substitution and $\frac{(n+1)n}{2}$ for back substitution
+
+  $\vdots$
+
+  Total: $\frac{1}{6} n^3 + O(n^2)$ for forward substitution and $n \frac{(n+1)n}{2}$ for back substitution
+
+  \item \textbf{Solving} $Ax = b$ if we know $A^{-1}$ costs $n^2$ operations
+
+    Matrix operations for $A^{-1}b$ take $n^2$ operations
+
+  \item \textbf{UPSHOT}: finding $L, U, p$ then solving $Ax = b$ is cheaper
+\end{itemize}
+
+\subsection{Errors in Linear Systems}
+When solving $Ax = b$, we normally don't know the exact values of $A$ and $b$, and have to use approximations $\hat{A}$ and $\hat{b}$ to solve $\hat{A}x = \hat{b}$. This can lead to a large amount of error. Consider
+
+\[ \left[ \begin{array}{ccc}
+    1.01 & .99 \\
+    -.99 & 1.01
+\end{array} \right]
+%
+\left[ \begin{array}{c}
+    x_1 \\
+    x_2 \\
+\end{array} \right]
+ =
+\left[ \begin{array}{c}
+    2 \\
+    2 \\
+\end{array} \right] \]
+
+We can see that $x = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ is the solution
+
+Now consider $\hat{b} = \begin{bmatrix} 2.02 \\ 1.98 \end{bmatrix}$, then we get a solution vector $\hat{x} = \begin{bmatrix} 2 \\ 0 \end{bmatrix}$
+
+\bigskip
+
+To measure the error of vectors, we use \textbf{vector norm} $\| \mathbf{x} \|$ which has the following properties
+\begin{itemize}
+  \item $\| \mathbf{x} \| = 0 \implies x = 0$
+  \item $\| \mathbf{\alpha x} \| = |\alpha| \| \mathbf{x} \|$
+  \item $\| \mathbf{x + y} \| = \| \mathbf{x} \| + \| \mathbf{y} \|$
+\end{itemize}
+
+We also define 3 types of norms
+\begin{itemize}
+  \item $\| \mathbf{x} \|_1 = |x_1| + \cdots + |x_n|$
+  \item $\| \mathbf{x} \|_2 = (|x_1| + \cdots + |x_n|)^{1/2}$
+  \item $\| \mathbf{x} \|_{\infty} = \max(|x_1|, \cdots, |x_d|)$
+\end{itemize}
+
+If a subscript isn't provided, then the equation is valid for all 3 norms
+
+\medskip
+
+We can then calculate the \textbf{relative error} with respect to a vector norm as $\frac{\| \mathbf{\hat{x}}  - x \|}{\| \mathbf{x} \|}$
+
+\bigskip
+
+To measure the error of matrix, we use a \textbf{matrix norm} $\| \mathbf{A} \|$ that has the property
+\begin{itemize}
+  \item $\| \mathbf{Ax} \| \leq \| \mathbf{A} \| \| \mathbf{x} \|$
+\end{itemize}
+Where $\| \mathbf{x} \|$ is one of the vector norms and $\| \mathbf{A} \|$ satisfies
+\[\| \mathbf{A} \| = \sup_{x \in R^n, x \neq 0}{\frac{\| \mathbf{Ax} \|}{\| \mathbf{x} \|} = \max_{x \in R^n, \| \mathbf{x} \| = 1}{\| \mathbf{Ax} \|}\]
+
+\bigskip
+
+Depending on which type of vector is used, we have 3 matrix norms:
+\begin{itemize}
+  \item $\| \mathbf{A} \|_{\infty} = \max_{i = 1, \ldots, n} \sum_{j = 1, \ldots, n} |a_{ij}|$ (max of row sums of absolute values)
+  \item $\| \mathbf{A} \|_{1} = \max_{j = 1, \ldots, n} \sum_{i = 1, \ldots, n} |a_{ij}|$ (max of column sums of absolute values)
+\end{itemize}
+
+
 \end{document}

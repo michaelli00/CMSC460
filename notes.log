@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  27 JUN 2021 19:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  10 JUL 2021 10:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -356,48 +356,158 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [1
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 27.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
- [2] [3]
-./notes.tex:138: Undefined control sequence.
-<recently read> \bega 
-                      
-l.138   Usually $\bega
-                      _n = \frac{1}{n^p}$ for $p > 0$
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 27.
+ [2] [3] [4] [5] [6] [7]
 
-[4] [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 275.
- [6] [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 275.
+./notes.tex:379: LaTeX Error: \begin{cases} on input line 379 ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./notes.tex:379: Missing $ inserted.
+<inserted text> 
+                $
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./notes.tex:379: Missing } inserted.
+<inserted text> 
+                }
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./notes.tex:379: Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I'm guessing that you meant to end an alignment here.
+
+./notes.tex:379: Missing $ inserted.
+<inserted text> 
+                $
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./notes.tex:379: Missing } inserted.
+<inserted text> 
+                }
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./notes.tex:379: Missing \right. inserted.
+<inserted text> 
+                \right .
+l.379 ...\frac{x_{\min}}{x}, 1) & |x| < x_{\min}\]
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./notes.tex:380: Missing $ inserted.
+<inserted text> 
+                $
+l.380 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./notes.tex:380: Display math should end with $$.
+<to be read again> 
+                   \par 
+l.380 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+[8] [9] [10]
+Overfull \hbox (12.37392pt too wide) in paragraph at lines 535--536
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[11] [12]
+./notes.tex:648: Missing } inserted.
+<inserted text> 
+                }
+l.648 ...| \mathbf{x} \| = 1}{\| \mathbf{Ax} \|}\]
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+./notes.tex:659: LaTeX Error: \begin{equation*} on input line 379 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.659 \end{document}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 659.
+[13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 659.
  (./notes.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 275.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 275.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 659.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 659.
 Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: 070B17BAF018FE9B43C229A42148FA0D;1080.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 275.
- ) 
+(rerunfilecheck)             Checksum: 82C513D7ECABF3E9D5005A7DB66A47D2;1195.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 659.
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 379 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
- 8388 strings out of 492616
- 118251 string characters out of 6129482
- 227680 words of memory out of 5000000
- 12137 multiletter control sequences out of 15000+600000
- 11671 words of font info for 46 fonts, out of 8000000 for 9000
+ 8392 strings out of 492616
+ 118108 string characters out of 6129482
+ 229677 words of memory out of 5000000
+ 12143 multiletter control sequences out of 15000+600000
+ 12290 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,6n,32p,929b,1011s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on notes.pdf (7 pages, 194865 bytes).
+ 28i,9n,32p,929b,1068s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on notes.pdf (13 pages, 235365 bytes).
 PDF statistics:
- 258 PDF objects out of 1000 (max. 8388607)
- 231 compressed objects within 3 object streams
- 86 named destinations out of 1000 (max. 500000)
- 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 284 PDF objects out of 1000 (max. 8388607)
+ 250 compressed objects within 3 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
